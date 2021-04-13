@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import Auth from '/imports/ui/services/auth';
 import logger from '/imports/startup/client/logger';
@@ -7,6 +7,7 @@ import Annotations from '/imports/api/annotations';
 import Users from '/imports/api/users';
 import AnnotationsTextService from '/imports/ui/components/whiteboard/annotations/text/service';
 import AnnotationsLocal from '/imports/ui/components/whiteboard/service';
+
 
 
 const CHAT_CONFIG = Meteor.settings.public.chat;
@@ -19,7 +20,7 @@ const SUBSCRIPTIONS = [
   'voiceUsers', 'whiteboard-multi-user', 'screenshare', 'group-chat',
   'presentation-pods', 'users-settings', 'guestUser', 'users-infos', 'note', 'meeting-time-remaining',
   'network-information', 'ping-pong', 'local-settings', 'users-typing', 'record-meetings', 'video-streams',
-  'voice-call-states',
+  'voice-call-states', 
 ];
 
 class Subscriptions extends Component {
@@ -105,7 +106,26 @@ export default withTracker(() => {
     },
     ...subscriptionErrorHandler,
   });
+/*   const sceneHandler = Meteor.subscribe('three-dimension', {
+    onReady: () => {
+      try{
+        const threed = ThreeDimension.find().fetch();
+        {console.log("fetching data 3d", threed)};
+        
+        const url = threed[0]['doc'];
+        console.log(url);   
+        
+      }catch(e)
+      {console.log("error fetching data 3d"+ e)}
+      
+      sceneHandler.stop();
 
+    },
+
+    ...subscriptionErrorHandler,
+
+  }); */
+  
 
   subscriptionsHandlers = subscriptionsHandlers.filter(obj => obj);
   const ready = subscriptionsHandlers.every(handler => handler.ready());
@@ -116,3 +136,25 @@ export default withTracker(() => {
 
   };
 })(Subscriptions);
+
+/*  RenderScene=(url)=> {
+   const onSceneReady = scene => {
+    BABYLON.SceneLoader.Append("", url, scene, function () {
+      scene.createDefaultCamera(true, true, true);
+            });
+          }
+          const onRender = scene => {
+            if (box !== undefined) {
+              var deltaTimeInMillis = scene.getEngine().getDeltaTime();
+              const rpm = 10;
+              box.rotation.y += ((rpm / 60) * Math.PI * 2 * (deltaTimeInMillis / 1000));
+            }
+          }
+          return (            
+          <div>
+            <ThreeDComponent antialias onSceneReady={onSceneReady} onRender={onRender} id='my-canvas' />
+          </div>
+          );
+
+
+            } */

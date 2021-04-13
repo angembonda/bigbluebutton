@@ -21,6 +21,12 @@ package org.bigbluebutton.presentation.imp;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.FileOutputStream;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -34,6 +40,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class TextFileCreatorImp implements TextFileCreator {
   private static Logger log = LoggerFactory.getLogger(TextFileCreatorImp.class);
@@ -65,9 +76,45 @@ public class TextFileCreatorImp implements TextFileCreator {
     boolean success = true;
     String source = pres.getUploadedFile().getAbsolutePath();
     String dest;
+    String destModel;
     String COMMAND = "";
 
-    if (SupportedFileTypes.isImageFile(pres.getFileType())) {
+    if (SupportedFileTypes.isModelFile(pres.getFileType())) {
+      File modelfilesDir = determineModelfilesDirectory(pres.getUploadedFile());
+      dest = textfilesDir.getAbsolutePath() + File.separatorChar + "slide-1.txt";
+      destModel = modelfilesDir.getAbsolutePath() + File.separatorChar + "slide1.svg";
+      
+      if (!modelfilesDir.exists())
+        modelfilesDir.mkdir();
+      
+      String text = "gltf";
+
+      File file = new File(dest);
+      Writer writer = null;
+      try {
+        writer = new BufferedWriter(new FileWriter(file));
+        writer.write(text);
+      } catch (IOException e) {
+        log.error("Error: ", e);
+        success = false;
+      } finally {
+        try {
+          writer.close();
+        } catch (IOException e) {
+          log.error("Error: ", e);
+          success = false;
+        }
+      }
+
+      try {
+        Path srcpath = Paths.get(source);
+        Path dstpath = Paths.get(destModel);
+        Files.copy(srcpath, dstpath, StandardCopyOption.REPLACE_EXISTING);
+      } catch (IOException e) {
+        log.error("Error: ", e);
+        success = false;
+      }
+    } else if (SupportedFileTypes.isImageFile(pres.getFileType())) {
       dest = textfilesDir.getAbsolutePath() + File.separatorChar + "slide-1.txt";
       String text = "No text could be retrieved for the slide";
 
@@ -121,6 +168,10 @@ public class TextFileCreatorImp implements TextFileCreator {
   private File determineTextfilesDirectory(File presentationFile) {
     return new File(
         presentationFile.getParent() + File.separatorChar + "textfiles");
+  }
+  private File determineModelfilesDirectory(File presentationFile) {
+    return new File(
+        presentationFile.getParent() + File.separatorChar + "svgs");
   }
 
   private void cleanDirectory(File directory) {

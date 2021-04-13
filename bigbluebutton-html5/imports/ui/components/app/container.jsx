@@ -26,7 +26,7 @@ import App from './component';
 import NavBarContainer from '../nav-bar/container';
 import ActionsBarContainer from '../actions-bar/container';
 import MediaContainer from '../media/container';
-import ThreeDContainer from '../three-dimension/container';
+
 
 
 const propTypes = {
@@ -39,7 +39,6 @@ const defaultProps = {
   navbar: <NavBarContainer />,
   actionsbar: <ActionsBarContainer />,
   media: <MediaContainer />,
-  threed: <ThreeDContainer />,
 };
 
 const intlMessages = defineMessages({
@@ -59,7 +58,6 @@ const AppContainer = (props) => {
     navbar,
     actionsbar,
     media,
-    threed,
     ...otherProps
   } = props;
 
@@ -68,7 +66,6 @@ const AppContainer = (props) => {
       navbar={navbar}
       actionsbar={actionsbar}
       media={media}
-      threed={threed}
       {...otherProps}
     />
   );

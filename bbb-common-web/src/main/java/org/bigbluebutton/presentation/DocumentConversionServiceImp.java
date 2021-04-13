@@ -78,6 +78,9 @@ public class DocumentConversionServiceImp implements DocumentConversionService {
         presentationFileProcessor.process(pres);
       } else if (SupportedFileTypes.isImageFile(fileType)) {
         presentationFileProcessor.process(pres);
+      } else if (SupportedFileTypes.isModelFile(fileType)) {
+        presentationFileProcessor.process(pres);
+        notifier.sendConversionCompletedMessage(pres);
       } else {
         Map<String, Object> logData = new HashMap<String, Object>();
         logData = new HashMap<String, Object>();
@@ -102,8 +105,10 @@ public class DocumentConversionServiceImp implements DocumentConversionService {
       logData.put("presId", pres.getId());
       logData.put("filename", pres.getName());
       logData.put("current", pres.isCurrent());
-      logData.put("logCode", "unsupported_file_format");
-      logData.put("message", "Unsupported file format");
+/*       logData.put("logCode", "unsupported_file_format");
+      logData.put("message", "Unsupported file format"); */
+      logData.put("logCode", "blabla");
+      logData.put("message", "blalaaaaa");
 
       Gson gson = new Gson();
       String logStr = gson.toJson(logData);

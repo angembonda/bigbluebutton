@@ -224,7 +224,7 @@ public:
         viewer: 2
   pingPong:
     clearUsersInSeconds: 180
-    pongTimeInSeconds: 15
+    pongTimeInSeconds: 1
   allowOutsideCommands:
     toggleRecording: false
     toggleSelfVoice: false
@@ -299,6 +299,10 @@ public:
     uploadSizeMin: 0
     uploadSizeMax: 50000000
     uploadValidMimeTypes:
+    - extension: .babylon
+      mime: model/babylon+json
+    - extension: .gltf
+      mime: model/gltf+json
     - extension: .pdf
       mime: application/pdf
     - extension: .doc

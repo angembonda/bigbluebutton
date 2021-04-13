@@ -5,9 +5,10 @@ import flat from 'flat';
 import RedisPubSub from '/imports/startup/server/redis';
 import { Slides } from '/imports/api/slides';
 import Logger from '/imports/startup/server/logger';
-import { SVG, PNG } from '/imports/utils/mimeTypes';
+import { SVG, PNG} from '/imports/utils/mimeTypes';
 import calculateSlideData from '/imports/api/slides/server/helpers';
 import addSlidePositions from './addSlidePositions';
+import { HTTP } from 'meteor/http';
 
 const loadSlidesFromHttpAlways = Meteor.settings.private.app.loadSlidesFromHttpAlways || false;
 
@@ -24,6 +25,7 @@ const requestWhiteboardHistory = (meetingId, slideId) => {
   return RedisPubSub.publishUserMessage(CHANNEL, EVENT_NAME, meetingId, USER_ID, payload);
 };
 
+
 const SUPPORTED_TYPES = [SVG, PNG];
 
 const fetchImageSizes = imageUri => probe(imageUri)
@@ -39,7 +41,7 @@ const fetchImageSizes = imageUri => probe(imageUri)
   })
   .catch((reason) => {
     Logger.error(`Error parsing image size. ${reason}. uri=${imageUri}`);
-    return reason;
+
   });
 
 export default function addSlide(meetingId, podId, presentationId, slide) {
@@ -109,27 +111,31 @@ export default function addSlide(meetingId, podId, presentationId, slide) {
 
   const imageSizeUri = (loadSlidesFromHttpAlways ? imageUri.replace(/^https/i, 'http') : imageUri);
 
-  return fetchImageSizes(imageSizeUri)
-    .then(({ width, height }) => {
+/*   return fetchImageSizes(imageSizeUri)
+    .then(({ width, height}) => {
       // there is a rare case when for a very long not-active meeting the presentation
       // files just disappear and width/height can't be retrieved
-      if (width && height) {
+      if (width && height) { */
         // pre-calculating the width, height, and vieBox coordinates / dimensions
         // to unload the client-side
+      try{
         const slideData = {
-          width,
-          height,
-          xOffset,
-          yOffset,
-          widthRatio,
-          heightRatio,
+          width:100,
+          height:100,
+          xOffset:0,
+          yOffset:0,
+          widthRatio:1,
+          heightRatio:1,
         };
+        
         const slidePosition = calculateSlideData(slideData);
 
         addSlidePositions(meetingId, podId, presentationId, slideId, slidePosition);
-      }
-
+      
+      
       return Slides.upsert(selector, modifier, cb);
-    })
-    .catch(reason => Logger.error(`Error parsing image size. ${reason}. slide=${slideId} uri=${imageUri}`));
+
+      
+    }catch(err){Logger.error(`Error parsing image size. ${err}. slide=${slideId} uri=${imageUri}`)}
+    
 }

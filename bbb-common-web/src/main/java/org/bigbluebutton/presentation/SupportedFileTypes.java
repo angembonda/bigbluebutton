@@ -33,7 +33,7 @@ public final class SupportedFileTypes {
 			// Add all the supported files				
 			add(XLS); add(XLSX);	add(DOC); add(DOCX); add(PPT); add(PPTX);				
 			add(ODT); add(RTF); add(TXT); add(ODS); add(ODP); add(PDF);
-			add(JPG); add(JPEG); add(PNG);
+			add(JPG); add(JPEG); add(PNG); add(GLTF); add(BABYLON);
 		}
 	});
 		
@@ -68,6 +68,9 @@ public final class SupportedFileTypes {
 	
 	public static boolean isPdfFile(String fileExtension) {
 		return "pdf".equalsIgnoreCase(fileExtension);
+	}
+	public static boolean isModelFile(String fileExtension) {
+		return "gltf".equalsIgnoreCase(fileExtension)||"babylon".equalsIgnoreCase(fileExtension);
 	}
 	
 	/*

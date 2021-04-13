@@ -27,7 +27,9 @@ import '/imports/api/guest-users/server';
 import '/imports/api/ping-pong/server';
 import '/imports/api/local-settings/server';
 import '/imports/api/voice-call-states/server';
-import '/imports/api/three-dimension/server';
+import '/imports/api/threeD/server';
+
+
 
 // Commons
 import '/imports/api/log-client/server';

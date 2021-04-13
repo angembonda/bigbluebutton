@@ -4,6 +4,7 @@ import Presentations from '/imports/api/presentations';
 import { Slides, SlidePositions } from '/imports/api/slides';
 import Users from '/imports/api/users';
 import Auth from '/imports/ui/services/auth';
+import { makeCall } from '/imports/ui/services/api';
 
 const getCurrentPresentation = podId => Presentations.findOne({
   podId,
@@ -181,6 +182,7 @@ const getMultiUserStatus = (whiteboardId) => {
   return data ? data.multiUser : false;
 };
 
+
 export default {
   getCurrentSlide,
   getSlidePosition,
@@ -191,4 +193,5 @@ export default {
   currentSlidHasContent,
   parseCurrentSlideContent,
   getCurrentPresentation,
+  
 };

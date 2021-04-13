@@ -860,6 +860,8 @@ model/vnd.parasolid.transmit.binary
 model/vnd.parasolid.transmit.text
 model/vnd.vtu					vtu
 model/vrml					wrl vrml
+model/gltf+json                  gltf
+model/babylon+json                  babylon
 multipart/alternative
 multipart/appledouble
 multipart/byteranges

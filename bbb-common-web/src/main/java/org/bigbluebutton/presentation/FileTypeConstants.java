@@ -39,5 +39,7 @@ public final class FileTypeConstants {
     public static final String JPG = "jpg";
     public static final String JPEG = "jpeg";
     public static final String PNG = "png";
+    public static final String GLTF = "gltf";
+    public static final String BABYLON = "babylon";
     private FileTypeConstants() {} // Prevent instantiation
 }

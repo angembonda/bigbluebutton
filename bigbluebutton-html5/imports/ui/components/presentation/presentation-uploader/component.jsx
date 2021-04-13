@@ -283,7 +283,8 @@ class PresentationUploader extends Component {
     if (!disableActions) {
       return handleSave(presentationsToSave)
         .then(() => {
-          const hasError = presentations.some(p => p.upload.error || p.conversion.error);
+         const hasError = presentations.some(p => p.upload.error || p.conversion.error);
+          
           if (!hasError) {
             this.setState({
               disableActions: false,
@@ -301,7 +302,8 @@ class PresentationUploader extends Component {
           }, () => {
             // if the selected current has error we revert back to the old one
             const newCurrent = presentations.find(p => p.isCurrent);
-            if (newCurrent.upload.error || newCurrent.conversion.error) {
+           if (newCurrent.upload.error || newCurrent.conversion.error) {
+  
               this.handleCurrentChange(oldCurrentId);
             }
           });
@@ -591,6 +593,7 @@ class PresentationUploader extends Component {
           {this.renderPresentationItemStatus(item)}
         </td>
         {hasError ? null : (
+         
           <td className={styles.tableItemActions}>
             <Button
               className={isDownloadableStyle}
@@ -622,7 +625,9 @@ class PresentationUploader extends Component {
               />
             )}
           </td>
-        )}
+        )
+        
+      }
       </tr>
     );
   }

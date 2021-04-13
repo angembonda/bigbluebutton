@@ -9,6 +9,7 @@ import CursorWrapperContainer from './cursor/cursor-wrapper-container/container'
 import AnnotationGroupContainer from '../whiteboard/annotation-group/container';
 import PresentationOverlayContainer from './presentation-overlay/container';
 import Slide from './slide/component';
+import ThreeComponent from './threeD/component';
 import { styles } from './styles.scss';
 import MediaService, { shouldEnableSwapLayout } from '../media/service';
 import PresentationCloseButton from './presentation-close-button/component';
@@ -52,6 +53,8 @@ class PresentationArea extends PureComponent {
       zoom: 100,
       fitToWidth: false,
       isFullscreen: false,
+      
+
     };
 
     this.getSvgRef = this.getSvgRef.bind(this);
@@ -108,6 +111,7 @@ class PresentationArea extends PureComponent {
       toggleSwapLayout,
       currentPresentationId,
       restoreOnUpdate,
+
     } = this.props;
 
     const presentationChanged = currentPresentationId !== currentPresentation._id;
@@ -119,6 +123,7 @@ class PresentationArea extends PureComponent {
         'info',
         'presentation',
       );
+      
     }
 
     if (layoutSwapped && restoreOnUpdate && isViewer && currentSlide) {
@@ -136,6 +141,7 @@ class PresentationArea extends PureComponent {
     window.removeEventListener('resize', this.onResize);
     this.refPresentationContainer.removeEventListener('fullscreenchange', this.onFullscreenChange);
   }
+ 
 
   onFullscreenChange() {
     const { isFullscreen } = this.state;
@@ -407,7 +413,12 @@ class PresentationArea extends PureComponent {
       currentSlide,
       slidePosition,
       userIsPresenter,
+      isViewer,
+    
+   
     } = this.props;
+
+    
 
     const {
       localPosition,
@@ -427,6 +438,7 @@ class PresentationArea extends PureComponent {
       imageUri,
       content,
     } = currentSlide;
+    
 
     let viewBoxPosition;
 
@@ -456,6 +468,53 @@ class PresentationArea extends PureComponent {
     const slideContent = content ? `${intl.formatMessage(intlMessages.slideContentStart)}
       ${content}
       ${intl.formatMessage(intlMessages.slideContentEnd)}` : intl.formatMessage(intlMessages.noSlideContent);
+
+    if(content=="gltf")
+    {
+
+      return(
+        <div 
+          style={{
+            position: 'absolute',
+            width: svgDimensions.width < 0 ? 0 : svgDimensions.width,
+            height: svgDimensions.height < 0 ? 0 : svgDimensions.height,
+          }}
+        >
+          
+          <ThreeComponent
+          imageUri={imageUri}
+          isPresenter= {userIsPresenter} 
+          isViewer= {isViewer}
+          svgWidth={svgDimensions.width}
+          svgHeight={svgDimensions.height}
+          /> 
+          <AnnotationGroupContainer
+            {...{
+              width,
+              height,
+            }}
+            whiteboardId={currentSlide.id}
+          />
+          <CursorWrapperContainer
+            podId={podId}
+            whiteboardId={currentSlide.id}
+            widthRatio={widthRatio}
+            physicalWidthRatio={svgDimensions.width / width}
+            slideWidth={width}
+            slideHeight={height}
+          />
+{/*           {this.renderOverlays(
+          currentSlide,
+          svgDimensions,
+          viewBoxPosition,
+          viewBoxDimensions,
+          physicalDimensions,
+          )} */}
+        </div>
+
+      );
+
+    }else 
 
     return (
       <div

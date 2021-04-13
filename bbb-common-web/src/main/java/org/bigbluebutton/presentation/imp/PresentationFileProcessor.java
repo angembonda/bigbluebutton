@@ -87,6 +87,12 @@ public class PresentationFileProcessor {
             pres.setNumberOfPages(1); // There should be only one image to convert.
             sendDocPageConversionStartedProgress(pres);
             imageToSwfSlidesGenerationService.generateSlides(pres);
+        } else if (SupportedFileTypes.isModelFile(pres.getFileType())) {
+            pres.setNumberOfPages(1);
+            sendDocPageConversionStartedProgress(pres);
+            textFileCreator.createTextFile(pres, 1);
+            notifier.sendConversionUpdateMessage(1, pres, 1);
+            notifier.sendConversionCompletedMessage(pres);
         }
     }
 

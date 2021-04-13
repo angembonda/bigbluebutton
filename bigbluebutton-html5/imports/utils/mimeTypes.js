@@ -14,6 +14,8 @@ export const JPEG = 'image/jpeg';
 export const PNG = 'image/png';
 export const SVG = 'image/svg+xml';
 
+export const GLTF = 'model/gltf+json';
+
 export const UPLOAD_SUPORTED = [
   XLS,
   XLSX,
@@ -29,4 +31,5 @@ export const UPLOAD_SUPORTED = [
   PDF,
   JPEG,
   PNG,
+  GLTF,
 ];

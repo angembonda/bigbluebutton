@@ -22,8 +22,7 @@ import PingPongContainer from '/imports/ui/components/ping-pong/container';
 import MediaService from '/imports/ui/components/media/service';
 import ManyWebcamsNotifier from '/imports/ui/components/video-provider/many-users-notify/container';
 import { styles } from './styles';
-import Button from '/imports/ui/components/button/component';
-import ThreeDComponent from '/imports/ui/components/three-dimension/component';
+
 
 const MOBILE_MEDIA = 'only screen and (max-width: 40em)';
 const APP_CONFIG = Meteor.settings.public.app;
@@ -82,7 +81,7 @@ const propTypes = {
   captions: PropTypes.element,
   locale: PropTypes.string,
   intl: intlShape.isRequired,
-  show3d: PropTypes.bool,
+
 };
 
 const defaultProps = {
@@ -102,13 +101,13 @@ class App extends Component {
     super();
     this.state = {
       enableResize: !window.matchMedia(MOBILE_MEDIA).matches,
-      show3d: false,
+      
 
     };
 
     this.handleWindowResize = throttle(this.handleWindowResize).bind(this);
     this.shouldAriaHide = this.shouldAriaHide.bind(this);
-    this._3dButtonClick = this._3dButtonClick.bind(this);
+    
   }
 
   componentDidMount() {
@@ -311,11 +310,6 @@ class App extends Component {
     ) : null);
   }
 
-  _3dButtonClick() {
-    this.setState({
-      show3d: true,
-    });
-  }
   
   renderPanel() {
     const { enableResize } = this.state;
@@ -333,18 +327,6 @@ class App extends Component {
     );
   }
 
-  render3d() {
-    return (
-      MediaService.toggleSwapLayout(),
-        <div>
-          <Button onClick={this._3dButtonClick}>Start 3d Model</Button>
-          {this.state.show3d
-            ? <ThreeDComponent />
-            : null
-          }
-        </div>
-    );
-  }
 
 
   render() {
@@ -362,7 +344,6 @@ class App extends Component {
             {this.renderNavBar()}
             {this.renderMedia()}
             {this.renderActionsBar()}
-            {this.render3d()}
           </div>
           {this.renderPanel()}
           {this.renderSidebar()}
