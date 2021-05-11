@@ -4,7 +4,7 @@ import Meetings from '/imports/api/meetings';
 import RedisPubSub from '/imports/startup/server/redis';
 import { extractCredentials } from '/imports/api/common/server/helpers';
 
-export default function removeScene() {
+export default function ClearCameraUrl() {
   const REDIS_CONFIG = Meteor.settings.private.redis;
   const CHANNEL = REDIS_CONFIG.channels.toAkkaApps;
   const EVENT_NAME = 'RemoveSceneMsg';

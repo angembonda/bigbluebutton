@@ -1,17 +1,13 @@
 import { Meteor } from 'meteor/meteor';
-import insertScene from './methods/insertScene';
-import removeScene from './methods/removeScene';
+import shareCamera from './methods/shareCamera';
+import ClearCameraUrl from './methods/ClearCameraUrl';
 import updateMesh from './methods/updateMesh';
-import addMesh from './methods/addMesh';
-import removeAddedMesh from './methods/removeAddedMesh';
 import removeMeshUpdate from './methods/removeMeshUpdate';
 
 Meteor.methods({
-  insertScene,
-  removeScene,
+  shareCamera,
+  ClearCameraUrl,
   updateMesh,
-  addMesh,
-  removeAddedMesh,
   removeMeshUpdate,
 
 });

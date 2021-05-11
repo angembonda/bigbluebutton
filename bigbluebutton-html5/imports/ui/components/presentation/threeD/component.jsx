@@ -5,7 +5,7 @@ import * as BABYLON from "babylonjs";
 import 'babylonjs-loaders';
 import 'babylonjs-serializers';
 import { Session } from 'meteor/session';
-import {sendCameraUrl, getCameraUrl, removeCameraUrl,setMeshUrl,getMeshUrl, addmesh,getNewMesh, removeUpdatedMesh, removeNewMesh } from './service';
+import {sendCameraUrl, getCameraUrl, removeCameraUrl,setMeshUrl,getMeshUrl } from './service';
 import Button from '/imports/ui/components/button/component';
 
 var scene;
@@ -206,54 +206,7 @@ class ThreeComponent extends Component{
       if (event.key === 'd') this.camera.alpha = this.camera.alpha - 0.06; // D
       
     };
- /*    onPointerDown = event => {
-      if (event.button !== 0) {
-          return;
-      }
-        debugger;
-      // check if we are under a mesh
-      var pickInfo = scene.pick(scene.pointerX, scene.pointerY);
-      if (pickInfo.hit) {
-          currentMesh = pickInfo.pickedMesh;
-          startingPoint = this.getGroundPosition(event);
-
-          if (startingPoint) { // we need to disconnect camera from canvas
-              setTimeout(function () {
-                  scene.activeCamera.detachControl(this.canvas);
-              }, 0);
-          }
-      }
-    };
-
-    onPointerUp =  () => {
-      if (startingPoint) {
-          scene.activeCamera.attachControl(this.canvas, true);
-          startingPoint = null;
-          return;
-      }
-    }
-
-    onPointerMove = event => {
-      if (!startingPoint) {
-          return;
-      }
-
-      var current = this.getGroundPosition(event);
-
-      if (!current) {
-          return;
-      }
-
-      var diff = current.subtract(startingPoint);
-      //currentMesh.position.addInPlace(diff);
-      currentMesh.locallyTranslate(diff);
-     
-     
-
-      startingPoint = current;
-    }
-
- */
+ 
 
     Download=()=> {
       var filename ="scene"

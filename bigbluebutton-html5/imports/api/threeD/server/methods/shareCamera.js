@@ -5,7 +5,7 @@ import { extractCredentials } from '/imports/api/common/server/helpers';
 import Logger from '/imports/startup/server/logger';
 import Meetings from '/imports/api/meetings';
 
-export default function insertScene(options) {
+export default function shareCamera(options) {
     const REDIS_CONFIG = Meteor.settings.private.redis;
     const CHANNEL = REDIS_CONFIG.channels.toAkkaApps;
     const EVENT_NAME = 'AddScenePubMsg';
